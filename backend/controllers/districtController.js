@@ -1,4 +1,4 @@
-const District = require('../models/District');
+const District = require('../models/Districtmodels');
 
 const getDistrictDetails = async (req, res) => {
     const { state_id }= req.query
@@ -15,13 +15,10 @@ const addDistrictDetails = async (req, res) => {
     console.log(req.body)
     await District.find({district_name: district_name})
     .then((districts) => {
-        console.log("test districts",districts);
+        console.log("Districts Test",districts);
         if(districts.length === 0){
             const newDistrict = new District({ _id, state_id, district_name });
-            newDistrict
-                .save()
-                .then(() => res.json({success: true, status: 200, message: "District Added Successfully"}))
-                .catch((err) => res.status(400).json("Error: " + err));
+            newDistrict.save().then(() => res.json({success: true, status: 200, message: "District Added Successfully"})).catch((err) => res.status(400).json("Error: " + err));
         } 
         else
             res.json({success: false, status: 200, message: "District name already exists"})

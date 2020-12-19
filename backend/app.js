@@ -3,24 +3,23 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const users = require('./user.json')
-const states = require('./state.json')
 const districts = require('./district.json')
 const childProfiles = require('./childProfile.json')
+const states = require('./state.json')
 
 dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-const authRoute = require('./routes/authRoutes');
+const authRoute = require('./routes/UserAuthRoutes');
+const childRoute = require('./routes/childRoutes');
 const stateRoute = require('./routes/stateRoutes');
 const districtRoute = require('./routes/districtRoutes');
-const childRoute = require('./routes/childRoutes');
-
-const User = require('./models/User')
-const State = require('./models/State')
-const District = require('./models/District')
-const Child = require('./models/Child')
+const User = require('./models/Usermodels')
+const State = require('./models/Statemodels')
+const District = require('./models/Districtmodels')
+const Child = require('./models/Childmodels')
 
 mongoose.connect(process.env.ATLAS_URI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true}, (err) => {
     if(err){
@@ -65,13 +64,12 @@ mongoose.connect(process.env.ATLAS_URI, {useNewUrlParser: true, useUnifiedTopolo
     }));
     
 });
-
 app.use('/api/user', authRoute);
+app.use('/api', childRoute);
 app.use('/api', stateRoute);
 app.use('/api', districtRoute);
-app.use('/api', childRoute);
-app.listen(8000, () => {
-    console.log("The server is up and running on port 8000")
+app.listen(5000, () => {
+    console.log("The server is up and running at port 5000")
 });
 
 

@@ -1,4 +1,4 @@
-const State = require('../models/State');
+const State = require('../models/Statemodels');
 
 const getStatesDetails = async (req, res) => {
     await State.find()
@@ -17,7 +17,7 @@ const addStateDetails = async (req, res) => {
             const newState = new State({ _id, state_name });
             newState
                 .save()
-                .then(() => res.json({success: true, status: 200, message: "State Added Successfully"}))
+                .then(() => res.json({success: true, status: 200, message: "Successfully State is been added"}))
                 .catch((err) => res.status(400).json("Error: " + err));
         } 
         else
